@@ -141,7 +141,14 @@ extension RestaurantsViewController: UISearchBarDelegate{
         restaurantArrayFiltered = restaurantArray
 
           if searchText.isEmpty == false {
-            restaurantArrayFiltered = restaurantArray!.filter({ $0.tags.contains(searchText) })
+            restaurantArrayFiltered = restaurantArray!.filter(
+                {
+                    for i in $0.tags{
+                        if i.contains(searchText){return true}
+                    }
+                    return false
+            })
+                    //$0.tags.contains(searchText) })
           }
 
           tableView.reloadData()
