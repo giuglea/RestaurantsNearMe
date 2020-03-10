@@ -7,16 +7,17 @@
 //
 
 import UIKit
+import CoreLocation
 
-class RestaurantsViewController: UIViewController {
+class RestaurantsViewController: UIViewController,CLLocationManagerDelegate {
 
     @IBOutlet weak var tableView: UITableView!
     
-    //let urlString = “https://d181c8f5-1bec-4249-b8a9-d0c517513da8.mock.pstmn.io”
     private var restaurantArray: [RestaurantModel]?
     private var restaurantArrayFiltered: [RestaurantModel]?
     private var networkManager: NetworkManager?
     private var imagesDictionary: [String: UIImage?]?
+    private var locationManager = CLLocationManager()
     
     
     @IBOutlet weak var searchBar: UISearchBar!
@@ -26,7 +27,9 @@ class RestaurantsViewController: UIViewController {
         super.viewDidLoad()
         tableView.dataSource = self
         tableView.delegate = self
+        locationManager.delegate = self
         
+        setLocationManager()
         networkManager = NetworkManager()
         retrieveData()
     }
@@ -36,6 +39,21 @@ class RestaurantsViewController: UIViewController {
             let detailVC = segue.destination as? DetailsViewController,
             let restaurant = sender as? RestaurantModel {
             detailVC.restaurant = restaurant
+        }
+    }
+    
+    
+    func setLocationManager(){
+        locationManager.desiredAccuracy = kCLLocationAccuracyHundredMeters
+        locationManager.requestWhenInUseAuthorization()
+        locationManager.startUpdatingLocation()
+    }
+    
+    
+    func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
+        let location = locations[locations.count-1]
+        if location.horizontalAccuracy>0{
+            
         }
     }
     
@@ -123,6 +141,7 @@ extension RestaurantsViewController: UITableViewDataSource {
     }
     
     
+    
 }
 
 extension RestaurantsViewController: UITableViewDelegate {
@@ -146,9 +165,11 @@ extension RestaurantsViewController: UISearchBarDelegate{
                     for i in $0.tags{
                         if i.contains(searchText){return true}
                     }
+                    if $0.name.contains(searchText){return true}
+                    if $0.description.contains(searchText){return true}
                     return false
             })
-                    //$0.tags.contains(searchText) })
+                   
           }
 
           tableView.reloadData()
@@ -156,3 +177,5 @@ extension RestaurantsViewController: UISearchBarDelegate{
     
     
 }
+
+

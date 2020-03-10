@@ -8,6 +8,7 @@
 
 import UIKit
 
+
 class RestaurantTableViewCell: UITableViewCell {
     
     @IBOutlet weak var restaurantImageView: UIImageView!
@@ -41,8 +42,7 @@ class RestaurantTableViewCell: UITableViewCell {
         }
         
         
-         
-       }
+    }
     
     
    func  setRatingStarAlternative(rating: Double){
