@@ -1,4 +1,8 @@
 # RestaurantsNearMe
 
-![](RestaurantViewDemo.gif) ![](DetailsViewDemo.gif)
+![](RestaurantViewDemo.gif)
+
+
+
+![](DetailsViewDemo.gif)
 
