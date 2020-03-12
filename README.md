@@ -1,1 +1,3 @@
 # Restaurants
+
+![](RestaurantViewDemo.gif)
